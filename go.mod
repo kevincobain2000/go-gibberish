@@ -1,6 +1,6 @@
 module github.com/kevincobain2000/go-gibberish
 
-go 1.19
+go 1.18
 
 require (
 	github.com/brianvoe/gofakeit/v6 v6.19.0
