@@ -8,9 +8,9 @@ import (
 )
 
 type Gibberish struct {
-	ConfidenceThreshhold float64
-	IsGibberish          bool
-	Confidence           float64
+	ConfidenceThreshhold float64 `json:"confidence_threshhold"`
+	IsGibberish          bool    `json:"is_gibberish"`
+	Confidence           float64 `json:"confidence"`
 }
 
 //go:embed en_words.txt
@@ -74,6 +74,10 @@ func (j *Gibberish) CalculateConfidence(raw string) float64 {
 		}
 		positiveCount++
 
+	}
+
+	if remainingWordsCount == 0 {
+		return 100.0
 	}
 
 	confidence := float64(positiveCount) / float64(remainingWordsCount)
