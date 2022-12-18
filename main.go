@@ -14,5 +14,5 @@ func main() {
 	j := gibberish.NewGibberish()
 	r := j.Detect(raw)
 
-	pp.Println(r)
+	_, _ = pp.Println(r)
 }
