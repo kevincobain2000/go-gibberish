@@ -13,10 +13,10 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func main() {
-	e := Echo()
-	e.Logger.Fatal(e.Start("localhost:3000"))
-}
+// func main() {
+// 	e := Echo()
+// 	e.Logger.Fatal(e.Start("localhost:3000"))
+// }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	e := Echo()
