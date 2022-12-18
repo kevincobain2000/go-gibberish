@@ -1,4 +1,6 @@
-package main
+// package main
+
+package handler
 
 import (
 	"fmt"
@@ -12,6 +14,16 @@ import (
 )
 
 func main() {
+	e := Echo()
+	e.Logger.Fatal(e.Start("localhost:3000"))
+}
+
+func Handler(w http.ResponseWriter, r *http.Request) {
+	e := Echo()
+	e.ServeHTTP(w, r)
+}
+
+func Echo() *echo.Echo {
 	e := echo.New()
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.Recover())
@@ -19,7 +31,7 @@ func main() {
 
 	h := NewGibberishHandler()
 	e.GET("/", h.GibberishHandler)
-	e.Logger.Fatal(e.Start("localhost:3000"))
+	return e
 }
 
 type GibberishHandler struct {
