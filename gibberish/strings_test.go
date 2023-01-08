@@ -53,6 +53,14 @@ func TestIsURL(t *testing.T) {
 			sentence: "https://google.com/test?q=123",
 			want:     true,
 		},
+		{
+			sentence: "text https://google.com/test?q=123",
+			want:     false,
+		},
+		{
+			sentence: "https://google.com/test?q=123 text",
+			want:     false,
+		},
 	}
 	for _, test := range tests {
 		t.Run(test.sentence, func(t *testing.T) {

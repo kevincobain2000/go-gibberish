@@ -57,6 +57,10 @@ func ExtractReadableText(URL string) (string, error) {
 }
 
 func IsURL(input string) bool {
+	// check if input has spaces
+	if strings.Contains(input, " ") {
+		return false
+	}
 	u, err := url.ParseRequestURI(input)
 	if err != nil {
 		fmt.Println("Error parsing URL:", err)
