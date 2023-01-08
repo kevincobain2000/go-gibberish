@@ -6,6 +6,7 @@ require (
 	github.com/brianvoe/gofakeit/v6 v6.19.0
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/k0kubun/pp v3.0.1+incompatible
+	github.com/knuppe/vader v1.0.1
 	github.com/labstack/echo/v4 v4.9.1
 	gotest.tools v2.2.0+incompatible
 )

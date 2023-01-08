@@ -17,6 +17,8 @@ github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 h1:uC1QfSlInpQ
 github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88/go.mod h1:3w7q1U84EfirKl04SVQ/s7nPm1ZPhiXd34z40TNz36k=
 github.com/k0kubun/pp v3.0.1+incompatible h1:3tqvf7QgUnZ5tXO6pNAZlrvHgl6DvifjDrd9g2S9Z40=
 github.com/k0kubun/pp v3.0.1+incompatible/go.mod h1:GWse8YhT0p8pT4ir3ZgBbfZild3tgzSScAn6HmfYukg=
+github.com/knuppe/vader v1.0.1 h1:eAPAvET1QDEuuJ2KMt06WNQ9JfPp20KEWcv+oX6/1Ws=
+github.com/knuppe/vader v1.0.1/go.mod h1:oGhKheu6kq0a8ahPsnllTk9BPR7ammBSd8Mh+8wg72o=
 github.com/labstack/echo/v4 v4.9.1 h1:GliPYSpzGKlyOhqIbG8nmHBo3i1saKWFOgh41AN3b+Y=
 github.com/labstack/echo/v4 v4.9.1/go.mod h1:Pop5HLc+xoc4qhTZ1ip6C0RtP7Z+4VzRLWZZFKqbbjo=
 github.com/labstack/gommon v0.4.0 h1:y7cvthEAEbU0yHOf4axH8ZG2NH8knB9iNSoTO8dyIk8=

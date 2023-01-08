@@ -8,7 +8,7 @@ import (
 )
 
 type Gibberish struct {
-	ConfidenceThreshhold float64 `json:"confidence_threshhold"`
+	confidenceThreshhold float64
 	IsGibberish          bool    `json:"is_gibberish"`
 	Confidence           float64 `json:"confidence"`
 }
@@ -32,7 +32,7 @@ func init() {
 
 func NewGibberish() *Gibberish {
 	return &Gibberish{
-		ConfidenceThreshhold: defaultConfidenceThreshhold,
+		confidenceThreshhold: defaultConfidenceThreshhold,
 	}
 }
 
@@ -40,13 +40,13 @@ func NewGibberish() *Gibberish {
 // for the gibberish detector. The default is 0.5
 // 0.0 to 1.0
 func (j *Gibberish) SetConfidenceThreshhold(confidenceThreshhold float64) *Gibberish {
-	j.ConfidenceThreshhold = confidenceThreshhold
+	j.confidenceThreshhold = confidenceThreshhold
 	return j
 }
 
 func (j *Gibberish) Detect(raw string) *Gibberish {
 	j.Confidence = j.CalculateConfidence(raw)
-	j.IsGibberish = j.Confidence <= j.ConfidenceThreshhold
+	j.IsGibberish = j.Confidence <= j.confidenceThreshhold
 	return j
 }
 

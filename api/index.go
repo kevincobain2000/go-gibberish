@@ -1,6 +1,6 @@
-// package main
+package main
 
-package handler
+// package handler
 
 import (
 	"fmt"
@@ -9,14 +9,15 @@ import (
 
 	"github.com/go-playground/validator"
 	"github.com/kevincobain2000/go-gibberish/gibberish"
+	"github.com/knuppe/vader"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
-// func main() {
-// 	e := Echo()
-// 	e.Logger.Fatal(e.Start("localhost:3000"))
-// }
+func main() {
+	e := Echo()
+	e.Logger.Fatal(e.Start("localhost:3000"))
+}
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	e := Echo()
@@ -35,10 +36,17 @@ func Echo() *echo.Echo {
 }
 
 type GibberishHandler struct {
+	vader *vader.Vader
 }
 
 func NewGibberishHandler() GibberishHandler {
-	return GibberishHandler{}
+	v, err := vader.NewVader("./lexicons/en.zip")
+	if err != nil {
+		panic(err)
+	}
+	return GibberishHandler{
+		vader: v,
+	}
 }
 
 // GibberishRequest for the /
@@ -49,7 +57,13 @@ type GibberishRequest struct {
 // GibberishResponse
 // returns success if server is healthy
 type GibberishResponse struct {
-	Data *gibberish.Gibberish `json:"data"`
+	Gibberish *gibberish.Gibberish `json:"gibberish"`
+	Sentiment struct {
+		Compound float64 `json:"compound"`
+		Positive float64 `json:"positive"`
+		Negative float64 `json:"negative"`
+		Neutral  float64 `json:"neutral"`
+	} `json:"sentiment"`
 }
 
 func (h *GibberishHandler) GibberishHandler(c echo.Context) error {
@@ -65,9 +79,17 @@ func (h *GibberishHandler) GibberishHandler(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, msgs)
 	}
 
-	return c.JSON(http.StatusOK, &GibberishResponse{
-		Data: gibberish.NewGibberish().Detect(request.Query),
-	})
+	sentimentScores := h.vader.PolarityScores(request.Query)
+	response := &GibberishResponse{
+		Gibberish: gibberish.NewGibberish().Detect(request.Query),
+	}
+
+	response.Sentiment.Compound = sentimentScores.Compound
+	response.Sentiment.Positive = sentimentScores.Positive
+	response.Sentiment.Negative = sentimentScores.Negative
+	response.Sentiment.Neutral = sentimentScores.Neutral
+
+	return c.JSON(http.StatusOK, response)
 }
 
 func ValidateRequest[T any](request T) (map[string]string, error) {
