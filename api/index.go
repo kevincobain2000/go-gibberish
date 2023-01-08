@@ -20,10 +20,10 @@ import (
 // 	e.Logger.Fatal(e.Start("localhost:3000"))
 // }
 
-// func Handler(w http.ResponseWriter, r *http.Request) {
-// 	e := Echo()
-// 	e.ServeHTTP(w, r)
-// }
+func Handler(w http.ResponseWriter, r *http.Request) {
+	e := Echo()
+	e.ServeHTTP(w, r)
+}
 
 func Echo() *echo.Echo {
 	e := echo.New()
