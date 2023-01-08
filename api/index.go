@@ -1,6 +1,6 @@
-package main
+// package main
 
-// package handler
+package handler
 
 import (
 	"fmt"
@@ -15,10 +15,10 @@ import (
 )
 
 // comment this out to use the handler package
-func main() {
-	e := Echo()
-	e.Logger.Fatal(e.Start("localhost:3000"))
-}
+// func main() {
+// 	e := Echo()
+// 	e.Logger.Fatal(e.Start("localhost:3000"))
+// }
 
 // func Handler(w http.ResponseWriter, r *http.Request) {
 // 	e := Echo()
