@@ -9,8 +9,8 @@ import (
 
 type Gibberish struct {
 	confidenceThreshhold float64
-	IsGibberish          bool    `json:"is_gibberish"`
-	Confidence           float64 `json:"confidence"`
+	IsGibberish          bool
+	Confidence           float64
 }
 
 //go:embed en_words.txt

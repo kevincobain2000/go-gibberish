@@ -1,6 +1,6 @@
-package main
+// package main
 
-// package handler
+package handler
 
 import (
 	"fmt"
@@ -14,10 +14,11 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func main() {
-	e := Echo()
-	e.Logger.Fatal(e.Start("localhost:3000"))
-}
+// comment this out to use the handler package
+// func main() {
+// 	e := Echo()
+// 	e.Logger.Fatal(e.Start("localhost:3000"))
+// }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	e := Echo()
@@ -57,7 +58,12 @@ type GibberishRequest struct {
 // GibberishResponse
 // returns success if server is healthy
 type GibberishResponse struct {
-	Gibberish *gibberish.Gibberish `json:"gibberish"`
+	Query     string `json:"query"`
+	Gibberish struct {
+		confidenceThreshhold float64
+		IsGibberish          bool    `json:"is_gibberish"`
+		Confidence           float64 `json:"confidence"`
+	} `json:"gibberish"`
 	Sentiment struct {
 		Compound float64 `json:"compound"`
 		Positive float64 `json:"positive"`
@@ -79,11 +85,26 @@ func (h *GibberishHandler) GibberishHandler(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, msgs)
 	}
 
-	sentimentScores := h.vader.PolarityScores(request.Query)
-	response := &GibberishResponse{
-		Gibberish: gibberish.NewGibberish().Detect(request.Query),
+	// check if input is a url and extract readable text
+	query := request.Query
+	if gibberish.IsURL(query) {
+		query, err = gibberish.ExtractReadableText(query)
+		if err != nil {
+			msgs = map[string]string{
+				"q": fmt.Sprintf("Unable to extract readable text from the URL: %s", err.Error()),
+			}
+			return echo.NewHTTPError(http.StatusUnprocessableEntity, msgs)
+		}
 	}
 
+	sentimentScores := h.vader.PolarityScores(query)
+	gibberishScores := gibberish.NewGibberish().Detect(query)
+
+	response := &GibberishResponse{
+		Query: query,
+	}
+	response.Gibberish.IsGibberish = gibberishScores.IsGibberish
+	response.Gibberish.Confidence = gibberishScores.Confidence
 	response.Sentiment.Compound = sentimentScores.Compound
 	response.Sentiment.Positive = sentimentScores.Positive
 	response.Sentiment.Negative = sentimentScores.Negative

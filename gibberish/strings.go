@@ -2,9 +2,17 @@ package gibberish
 
 import (
 	_ "embed"
+	"fmt"
+	"net/http"
+	"net/url"
 	"regexp"
 	"strings"
+	"time"
 	"unicode"
+
+	"github.com/go-shiori/dom"
+	strip "github.com/grokify/html-strip-tags-go"
+	"github.com/markusmobius/go-trafilatura"
 )
 
 func RemoveNumbers(input string) string {
@@ -15,6 +23,46 @@ func RemoveNumbers(input string) string {
 		return r
 	}, input)
 	return input
+}
+
+func ExtractReadableText(URL string) (string, error) {
+	httpClient := &http.Client{Timeout: 30 * time.Second}
+	parsedURL, err := url.ParseRequestURI(URL)
+	if err != nil {
+		return "", err
+	}
+
+	// Fetch article
+	resp, err := httpClient.Get(URL)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	// Extract content
+	opts := trafilatura.Options{
+		IncludeImages: false,
+		IncludeLinks:  false,
+		OriginalURL:   parsedURL,
+	}
+
+	result, err := trafilatura.Extract(resp.Body, opts)
+	if err != nil {
+		return "", err
+	}
+
+	readableText := strip.StripTags(dom.OuterHTML(result.ContentNode))
+
+	return readableText, nil
+}
+
+func IsURL(input string) bool {
+	u, err := url.ParseRequestURI(input)
+	if err != nil {
+		fmt.Println("Error parsing URL:", err)
+		return false
+	}
+	return u.IsAbs()
 }
 
 func RemovePunctuation(input string) string {

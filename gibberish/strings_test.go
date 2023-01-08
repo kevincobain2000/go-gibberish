@@ -39,3 +39,25 @@ func TestRemoveNumbers(t *testing.T) {
 		})
 	}
 }
+
+func TestIsURL(t *testing.T) {
+	tests := []struct {
+		sentence string
+		want     bool
+	}{
+		{
+			sentence: "http://google.com",
+			want:     true,
+		},
+		{
+			sentence: "https://google.com/test?q=123",
+			want:     true,
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.sentence, func(t *testing.T) {
+			actual := IsURL(test.sentence)
+			assert.Equal(t, test.want, actual)
+		})
+	}
+}
