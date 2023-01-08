@@ -1,6 +1,6 @@
-// package main
+package main
 
-package handler
+// package handler
 
 import (
 	"fmt"
@@ -8,22 +8,22 @@ import (
 	"reflect"
 
 	"github.com/go-playground/validator"
+	vader "github.com/jonreiter/govader"
 	"github.com/kevincobain2000/go-gibberish/gibberish"
-	"github.com/knuppe/vader"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 // comment this out to use the handler package
-// func main() {
-// 	e := Echo()
-// 	e.Logger.Fatal(e.Start("localhost:3000"))
-// }
-
-func Handler(w http.ResponseWriter, r *http.Request) {
+func main() {
 	e := Echo()
-	e.ServeHTTP(w, r)
+	e.Logger.Fatal(e.Start("localhost:3000"))
 }
+
+// func Handler(w http.ResponseWriter, r *http.Request) {
+// 	e := Echo()
+// 	e.ServeHTTP(w, r)
+// }
 
 func Echo() *echo.Echo {
 	e := echo.New()
@@ -37,14 +37,11 @@ func Echo() *echo.Echo {
 }
 
 type GibberishHandler struct {
-	vader *vader.Vader
+	vader *vader.SentimentIntensityAnalyzer
 }
 
 func NewGibberishHandler() GibberishHandler {
-	v, err := vader.NewVader("./lexicons/en.zip")
-	if err != nil {
-		panic(err)
-	}
+	v := vader.NewSentimentIntensityAnalyzer()
 	return GibberishHandler{
 		vader: v,
 	}

@@ -7,8 +7,8 @@ require (
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-shiori/dom v0.0.0-20210627111528-4e4722cd0d65
 	github.com/grokify/html-strip-tags-go v0.0.1
+	github.com/jonreiter/govader v0.0.0-20220408022859-68ffa1d6eff4
 	github.com/k0kubun/pp v3.0.1+incompatible
-	github.com/knuppe/vader v1.0.1
 	github.com/labstack/echo/v4 v4.9.1
 	github.com/markusmobius/go-trafilatura v0.0.0-20220322040233-408c9873be76
 	gotest.tools v2.2.0+incompatible
@@ -45,5 +45,6 @@ require (
 	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
+	gonum.org/v1/gonum v0.8.2 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 )
