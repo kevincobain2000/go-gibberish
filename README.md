@@ -17,13 +17,13 @@
   This package uses a dictionary of words to detect if a text is gibberish or not.
 </p>
 
-**Langauges:** English
+**Languages:** English
 
-**Robust** 1:1 dictionary lookup with heauristics.
+**Robust** 1:1 dictionary lookup with heuristics.
 
 **Handles** Punctuation, numbers, and etc.
 
-**Performace:** Blazing fast.
+**Performance:** Blazing fast.
 
 
 
